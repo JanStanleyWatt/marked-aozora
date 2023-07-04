@@ -1,0 +1,49 @@
+{
+    "name": "marked-aozora",
+    "version": "0.1.0",
+    "description": "Add Aozora Bunko style ruby support to marked.js",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "debug": "ts-node-esm ./src/example.ts",
+        "build": "tsc",
+        "prepare": "npm run build",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "marked",
+        "markdown",
+        "plugin"
+    ],
+    "author": "Jan Stanley Watt",
+    "license": "Apache-2.0",
+    "peerDependencies": {
+        "marked": "^5.1.0"
+    },
+    "devDependencies": {
+        "@types/marked": "^5.0.0",
+        "@typescript-eslint/eslint-plugin": "^5.60.1",
+        "@typescript-eslint/parser": "^5.60.1",
+        "eslint": "^8.43.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-redos": "^4.4.5",
+        "eslint-plugin-security": "^1.7.1",
+        "jest": "^29.5.0",
+        "marked": "^5.1.0",
+        "prettier": "^2.8.8",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.1.6"
+    },
+    "files": [
+        "dist/index.js",
+        "dist/index.d.ts",
+        "dist/lib",
+        "package.json",
+        "README.md",
+        "LICENSE"
+    ],
+    "engines": {
+        "node": ">= 18"
+    }
+}

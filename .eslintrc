@@ -1,0 +1,21 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:security/recommended",
+        "plugin:redos/recommended",
+        "prettier"
+    ],
+    "plugins": ["@typescript-eslint"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "env": { "browser": true, "node": true, "es2022": true },
+    "rules": {
+        "security/detect-unsafe-regex": "off",
+        "redos/no-vulnerable": ["error", { "cache": true }]
+    }
+}
