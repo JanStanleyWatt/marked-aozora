@@ -6,7 +6,8 @@
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
-        "debug": "ts-node-esm ./src/example.ts",
+        "debug": "ts-node-esm ./src/debug.ts",
+        "example": "ts-node-esm ./src/example.ts",
         "build": "tsc",
         "prepare": "npm run build",
         "test": "echo \"Error: no test specified\" && exit 1"

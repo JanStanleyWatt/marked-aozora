@@ -28,20 +28,13 @@ const aozoraRuby: marked.TokenizerAndRendererExtension = {
     level: "inline",
 
     start(src: string): number | void {
-        console.log(rubyDetector(src) ?? -1);
         return rubyDetector(src);
     },
 
-    tokenizer(src: string, tokens: TokenArray): marked.Tokens.Generic | void {
+    tokenizer(src: string, _tokens: TokenArray): marked.Tokens.Generic | void {
         const ruby = rubyTokenizser(src);
 
         if (ruby !== null) {
-            // TODO: Remove before deploy `console.log(...)`
-            console.log(tokens);
-            console.log(ruby.raw);
-            console.log(ruby.parent);
-            console.log(ruby.rt);
-
             return {
                 type: extensionName,
                 raw: ruby.raw,

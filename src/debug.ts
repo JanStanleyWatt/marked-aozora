@@ -7,7 +7,8 @@ marked.use({
     extensions: [aozoraRuby],
 });
 
-const markdown: string =
-    "このExtension《エクステンション》はとても｜**素敵**《すてき》で完璧《**かんぺき**》だ";
+const markdown: string = "これは実に**素敵**《すてき》で完璧《**かんぺき**》だ";
 
+console.dir(marked.lexer(markdown), { depth: null });
+console.log("");
 console.log(marked.parse(markdown));
