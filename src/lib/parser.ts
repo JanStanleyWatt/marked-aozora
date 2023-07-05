@@ -37,20 +37,24 @@ export function rubyTokenizser(src: string): RubyToken | null {
     for (const pattern of rubyPattern) {
         const ruby = pattern.exec(src);
 
-        if (ruby !== null) {
-            const rt = src.slice(ruby[0].length).match(/^(.+?)》/u);
-
-            const isMatch =
-                ruby[1] !== undefined && rt !== null && rt[1] !== undefined;
-
-            if (isMatch) {
-                return {
-                    raw: ruby[0] + rt[0],
-                    parent: ruby[1] ?? "",
-                    rt: rt[1] ?? "",
-                };
-            }
+        if (ruby === null) {
+            return null;
         }
+
+        const rt = src.slice(ruby[0].length).match(/^(.+?)》/u);
+
+        const isMatch =
+            ruby[1] !== undefined && rt !== null && rt[1] !== undefined;
+
+        if (!isMatch) {
+            return null;
+        }
+
+        return {
+            raw: ruby[0] + rt[0],
+            parent: ruby[1] ?? "",
+            rt: rt[1] ?? "",
+        };
     }
 
     return null;

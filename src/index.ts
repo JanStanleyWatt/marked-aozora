@@ -34,14 +34,16 @@ const aozoraRuby: marked.TokenizerAndRendererExtension = {
     tokenizer(src: string, _tokens: TokenArray): marked.Tokens.Generic | void {
         const ruby = rubyTokenizser(src);
 
-        if (ruby !== null) {
-            return {
-                type: extensionName,
-                raw: ruby.raw,
-                ruby: this.lexer.inlineTokens(ruby.parent),
-                rt: this.lexer.inlineTokens(ruby.rt),
-            };
+        if (ruby === null) {
+            return;
         }
+
+        return {
+            type: extensionName,
+            raw: ruby.raw,
+            ruby: this.lexer.inlineTokens(ruby.parent),
+            rt: this.lexer.inlineTokens(ruby.rt),
+        };
     },
 
     // This code using `any` type
