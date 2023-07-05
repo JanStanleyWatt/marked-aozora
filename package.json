@@ -6,7 +6,7 @@
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
-        "debug": "ts-node-esm ./src/debug.ts",
+        "debug": "MARKED_AOZORA_DEBUG_VERBOSE=1 ts-node-esm ./src/debug.ts",
         "example": "ts-node-esm ./src/example.ts",
         "build": "tsc",
         "prepare": "npm run build",
