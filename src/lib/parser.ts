@@ -38,7 +38,7 @@ export function rubyTokenizser(src: string): RubyToken | null {
         const ruby = pattern.exec(src);
 
         if (ruby === null) {
-            return null;
+            continue;
         }
 
         const rt = src.slice(ruby[0].length).match(/^(.+?)》/u);
@@ -47,7 +47,7 @@ export function rubyTokenizser(src: string): RubyToken | null {
             ruby[1] !== undefined && rt !== null && rt[1] !== undefined;
 
         if (!isMatch) {
-            return null;
+            continue;
         }
 
         return {
