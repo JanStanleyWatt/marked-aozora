@@ -45,7 +45,7 @@ export function rubyDetector(src: string): number | undefined {
  * @param src Markdown covered by this extension
  * @returns Object for <ruby> and <rt> tags, or `null`
  */
-export function rubyTokenizser(src: string): RubyToken | null {
+export function rubyTokenizer(src: string): RubyToken | null {
     for (const pattern of rubyPattern) {
         const ruby = pattern.exec(src);
 
@@ -53,7 +53,7 @@ export function rubyTokenizser(src: string): RubyToken | null {
             continue;
         }
 
-        const rt = src.slice(ruby[0].length).match(/^(.+)》/u);
+        const rt = src.slice(ruby[0].length).match(/^(.+?)》/u);
 
         const isMatch =
             ruby[1] !== undefined && rt !== null && rt[1] !== undefined;
