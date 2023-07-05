@@ -6,7 +6,7 @@ interface RubyToken {
 
 const rubyPattern: RegExp[] = [
     // 区切り文字（｜）
-    /^｜(.*?)《/u,
+    /^｜([^｜]*?)《/u,
     // 漢字
     /^(\p{Ideographic}[ヵヶゕ\p{Ideographic}]*?)《/u,
     // 全角英数
