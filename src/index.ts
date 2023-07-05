@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import type { marked } from "marked";
-// import { rubyDetector, rubyTokenizser } from "./lib/parser.js";
+import type { TokenArray } from "./lib/types.js";
 import { rubyDetector, rubyTokenizser } from "./lib/parser.js";
-
-type TokenArray = marked.Token[] | marked.TokensList;
 
 const extensionName = "aozoraRuby";
 

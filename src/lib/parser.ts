@@ -1,8 +1,4 @@
-interface RubyToken {
-    raw: string;
-    parent: string;
-    rt: string;
-}
+import type { TokenArray, RubyToken } from "./types.js";
 
 const rubyPattern: RegExp[] = [
     // 区切り文字（｜）
