@@ -31,7 +31,7 @@ export function rubyDetector(src: string): number | undefined {
 
 /**
  * @param src Markdown covered by this extension
- * @returns Object for <ruby> and <rt> tags, or `undefined`
+ * @returns Object for <ruby> and <rt> tags, or `null`
  */
 export function rubyTokenizser(src: string): RubyToken | null {
     for (const pattern of rubyPattern) {
