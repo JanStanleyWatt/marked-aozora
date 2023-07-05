@@ -1,4 +1,4 @@
-import type { TokenArray, RubyToken } from "./types.js";
+import type { RubyToken } from "./types.js";
 
 const rubyPattern = [
     // 区切り文字（｜）
@@ -37,7 +37,7 @@ export function rubyTokenizser(src: string): RubyToken | null {
             continue;
         }
 
-        const rt = src.slice(ruby[0].length).match(/^(.+?)》/u);
+        const rt = src.slice(ruby[0].length).match(/^(.+)》/u);
 
         const isMatch =
             ruby[1] !== undefined && rt !== null && rt[1] !== undefined;

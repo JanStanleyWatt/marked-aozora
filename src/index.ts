@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import type { marked } from "marked";
-import type { TokenArray } from "./lib/types.js";
 import { rubyDetector, rubyTokenizser } from "./lib/parser.js";
 
 const extensionName = "aozoraRuby";
@@ -29,18 +28,18 @@ const aozoraRuby: marked.TokenizerAndRendererExtension = {
         return rubyDetector(src);
     },
 
-    tokenizer(src: string, _tokens: TokenArray): marked.Tokens.Generic | void {
-        const ruby = rubyTokenizser(src);
+    tokenizer(src: string): marked.Tokens.Generic | void {
+        const rubyObject = rubyTokenizser(src);
 
-        if (ruby === null) {
+        if (rubyObject === null) {
             return;
         }
 
         return {
             type: extensionName,
-            raw: ruby.raw,
-            ruby: this.lexer.inlineTokens(ruby.parent),
-            rt: this.lexer.inlineTokens(ruby.rt),
+            raw: rubyObject.raw,
+            ruby: this.lexer.inlineTokens(rubyObject.parent),
+            rt: this.lexer.inlineTokens(rubyObject.rt),
         };
     },
 
