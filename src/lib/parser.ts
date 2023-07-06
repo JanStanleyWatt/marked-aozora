@@ -98,3 +98,66 @@ export function rubyTokenizer(src: string): RubyToken | null {
 
     return null;
 }
+
+export function rubySuteganaReplacer(src: string) {
+    const fromArray = [
+        "ぁ",
+        "ぃ",
+        "ぅ",
+        "ぇ",
+        "ぉ",
+        "っ",
+        "ゃ",
+        "ゅ",
+        "ょ",
+        "ゎ",
+        "ァ",
+        "ィ",
+        "ゥ",
+        "ェ",
+        "ォ",
+        "ヵ",
+        "ヶ",
+        "ッ",
+        "ャ",
+        "ュ",
+        "ョ",
+        "ヮ",
+    ];
+    const toArray = [
+        "あ",
+        "い",
+        "う",
+        "え",
+        "お",
+        "つ",
+        "や",
+        "ゆ",
+        "よ",
+        "わ",
+        "ア",
+        "イ",
+        "ウ",
+        "エ",
+        "オ",
+        "カ",
+        "ケ",
+        "ツ",
+        "ヤ",
+        "ユ",
+        "ヨ",
+        "ワ",
+    ];
+    let answer = src;
+    for (let index = 0; index < fromArray.length; index++) {
+        const from = fromArray[index];
+        const to = toArray[index];
+
+        if (from === undefined || to === undefined) {
+            break;
+        }
+
+        answer = answer.replaceAll(from, to);
+    }
+    return answer;
+}

@@ -15,12 +15,16 @@ limitations under the License.
 */
 
 import type { marked } from "marked";
-import { rubyDetector, rubyTokenizer } from "./lib/parser.js";
+import {
+    rubyDetector,
+    rubySuteganaReplacer,
+    rubyTokenizer,
+} from "./lib/parser.js";
 
 const extensionName = "aozoraRuby";
 interface extensionOption {
-    useRpTag: boolean;
-    useSutegana: boolean;
+    useRpTag?: boolean;
+    useSutegana?: boolean;
 }
 
 const aozoraRuby = (
@@ -29,35 +33,46 @@ const aozoraRuby = (
     return {
         name: extensionName,
 
-    level: "inline",
+        level: "inline",
 
-    start(src: string): number | void {
-        return rubyDetector(src);
-    },
+        start(src: string): number | void {
+            return rubyDetector(src);
+        },
 
-    tokenizer(src: string): marked.Tokens.Generic | void {
-        const rubyObject = rubyTokenizer(src);
+        tokenizer(src: string): marked.Tokens.Generic | void {
+            const rubyObject = rubyTokenizer(src);
 
-        if (rubyObject === null) {
-            return;
-        }
+            if (rubyObject === null) {
+                return;
+            }
 
-        return {
-            type: extensionName,
-            raw: rubyObject.raw,
-            ruby: this.lexer.inlineTokens(rubyObject.parent),
-            rt: this.lexer.inlineTokens(rubyObject.rt),
-        };
-    },
+            if (option.useSutegana === true) {
+                rubyObject.rt = rubySuteganaReplacer(rubyObject.rt);
+            }
 
-    // This code using `any` type
-    renderer(token: marked.Tokens.Generic): string {
-        /* eslint-disable @typescript-eslint/no-unsafe-argument */
-        return `<ruby>${this.parser.parseInline(
-            token.ruby
-        )}<rt>${this.parser.parseInline(token.rt)}</rt></ruby>`;
-        /* eslint-enable @typescript-eslint/no-unsafe-argument */
-    },
+            return {
+                type: extensionName,
+                raw: rubyObject.raw,
+                ruby: this.lexer.inlineTokens(rubyObject.parent),
+                rt: this.lexer.inlineTokens(rubyObject.rt),
+            };
+        },
+
+        // !! This code using `any` type !!
+        renderer(token: marked.Tokens.Generic): string {
+            /* eslint-disable @typescript-eslint/no-unsafe-argument */
+            return option.useRpTag
+                ? `<ruby>${this.parser.parseInline(
+                      token.ruby
+                  )}<rp>（</rp><rt>${this.parser.parseInline(
+                      token.rt
+                  )}</rt><rp>）</rp></ruby>`
+                : `<ruby>${this.parser.parseInline(
+                      token.ruby
+                  )}<rt>${this.parser.parseInline(token.rt)}</rt></ruby>`;
+            /* eslint-enable @typescript-eslint/no-unsafe-argument */
+        },
+    };
 };
 
 export default aozoraRuby;
