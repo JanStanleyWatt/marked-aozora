@@ -10,7 +10,7 @@
         "example": "ts-node-esm ./src/example.ts",
         "build": "tsc",
         "prepare": "npm run build",
-        "test": "ts-jest"
+        "test": "jest"
     },
     "keywords": [
         "marked",
