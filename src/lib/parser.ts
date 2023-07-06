@@ -54,6 +54,7 @@ function rubyPatternMatching(src: string): RegExpExecArray | null {
 }
 
 /**
+ * Function to use with `marked.TokenizerAndRendererExtension.start(src: string)`
  * @param src Markdown covered by this extension
  * @returns Index that hints for this extension to check, or `undefined`
  */
@@ -64,6 +65,7 @@ export function rubyDetector(src: string): number | undefined {
 }
 
 /**
+ * Function to use with `marked.TokenizerAndRendererExtension.tokenizer(src: string)`
  * @param src Markdown covered by this extension
  * @returns Object for <ruby> and <rt> tags, or `null`
  */
@@ -105,7 +107,12 @@ export function rubyTokenizer(src: string): RubyToken | null {
     return null;
 }
 
-export function rubySuteganaReplacer(src: string) {
+/**
+ * Optional function to convert discarded kana to upper case
+ * @param src Markdown covered by this extension
+ * @returns Replaced markdown
+ */
+export function rubySuteganaReplacer(src: string): string {
     const fromArray = [
         "ぁ",
         "ぃ",
