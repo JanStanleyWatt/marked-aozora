@@ -70,6 +70,7 @@ export function rubyDetector(src: string): number | undefined {
 export function rubyTokenizer(src: string): RubyToken | null {
     const ruby = rubyPatternMatching(src);
 
+    // Skip processing if rubyPatternMatching(src) is not successful
     if (ruby === null || ruby[1] === undefined) {
         return null;
     }
