@@ -20,20 +20,33 @@ interface RubyToken {
     rt: string;
 }
 
-const rubyPattern = [
-    // 区切り文字（｜）
-    /^｜([^｜]*?)《/u,
-    // 漢字
-    /^(\p{Ideographic}[ヵヶゕ\p{Ideographic}]*?)《/u,
-    // 全角英数
-    /^([Ａ-Ｚａ-ｚ０-９\p{sc=Greek}\p{sc=Cyrillic}―＆’，．－]*?)《/u,
-    // 半角英数
-    /^([A-Za-z0-9@$#=/\-&'"][A-Za-z0-9@\$#=/\-&'"_*!?.,:;-~…]*?)《/u,
-    // カタカナ(イコールっぽく見える記号はダブルハイフンと言う別物)
-    /^(\p{sc=Katakana}[ﾞﾟ゛゜゠-ー・ヽヾ\p{sc=Katakana}]*?)《/u,
-    // ひらがな
-    /^(\p{sc=Hiragana}[ﾞﾟ゛゜・ーゝゞ\p{sc=Hiragana}]*?)《/u,
-];
+function rubyPatternMatching(src: string): RegExpExecArray | null {
+    const rubyPattern = [
+        // 区切り文字（｜）
+        /^｜([^｜]*?)《/u,
+        // 漢字
+        /^(\p{Ideographic}[ヵヶゕ\p{Ideographic}]*?)《/u,
+        // 全角英数
+        /^([Ａ-Ｚａ-ｚ０-９\p{sc=Greek}\p{sc=Cyrillic}―＆’，．－]*?)《/u,
+        // 半角英数
+        /^([A-Za-z0-9@$#=/\-&'"][A-Za-z0-9@\$#=/\-&'"_*!?.,:;-~…]*?)《/u,
+        // カタカナ(イコールっぽく見える記号はダブルハイフンと言う別物)
+        /^(\p{sc=Katakana}[ﾞﾟ゛゜゠-ー・ヽヾ\p{sc=Katakana}]*?)《/u,
+        // ひらがな
+        /^(\p{sc=Hiragana}[ﾞﾟ゛゜・ーゝゞ\p{sc=Hiragana}]*?)《/u,
+    ];
+
+    for (const pattern of rubyPattern) {
+        const ruby = pattern.exec(src);
+
+        if (ruby === null || ruby[1] === undefined) {
+            continue;
+        } else {
+            return ruby;
+        }
+    }
+    return null;
+}
 
 /**
  * @param src Markdown covered by this extension
@@ -50,27 +63,37 @@ export function rubyDetector(src: string): number | undefined {
  * @returns Object for <ruby> and <rt> tags, or `null`
  */
 export function rubyTokenizer(src: string): RubyToken | null {
-    for (const pattern of rubyPattern) {
-        const ruby = pattern.exec(src);
+    const ruby = rubyPatternMatching(src);
 
-        if (ruby === null) {
-            continue;
+    if (ruby === null || ruby[1] === undefined) {
+        return null;
+    }
+
+    const target = src.slice(ruby[0].length);
+    let openerCount = 1;
+    let raw = ruby[0];
+    let rt = "";
+
+    for (let index = 0; index < target.length; index++) {
+        raw += target[index];
+        switch (target[index]) {
+            case "《":
+                ++openerCount;
+                break;
+            case "》":
+                --openerCount;
+                break;
         }
 
-        const rt = src.slice(ruby[0].length).match(/^(.+?)》/u);
-
-        const isMatch =
-            ruby[1] !== undefined && rt !== null && rt[1] !== undefined;
-
-        if (!isMatch) {
-            continue;
+        if (openerCount === 0) {
+            return {
+                raw: raw,
+                parent: ruby[1],
+                rt: rt,
+            };
+        } else {
+            rt += target[index];
         }
-
-        return {
-            raw: ruby[0] + rt[0],
-            parent: ruby[1] ?? "",
-            rt: rt[1] ?? "",
-        };
     }
 
     return null;
