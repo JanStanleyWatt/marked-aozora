@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { RubyToken } from "./types.js";
+interface RubyToken {
+    raw: string;
+    parent: string;
+    rt: string;
+}
 
 const rubyPattern = [
     // 区切り文字（｜）
