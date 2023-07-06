@@ -18,9 +18,16 @@ import type { marked } from "marked";
 import { rubyDetector, rubyTokenizer } from "./lib/parser.js";
 
 const extensionName = "aozoraRuby";
+interface extensionOption {
+    useRpTag: boolean;
+    useSutegana: boolean;
+}
 
-const aozoraRuby: marked.TokenizerAndRendererExtension = {
-    name: extensionName,
+const aozoraRuby = (
+    option: extensionOption = { useRpTag: false, useSutegana: false }
+): marked.TokenizerAndRendererExtension => {
+    return {
+        name: extensionName,
 
     level: "inline",
 

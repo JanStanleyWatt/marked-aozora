@@ -20,7 +20,7 @@ import aozoraRuby from "./index.js";
 marked.use({
     mangle: false,
     headerIds: false,
-    extensions: [aozoraRuby],
+    extensions: [aozoraRuby()],
 });
 
 const markdown = "これは実に｜素敵《すてき》で完璧《**かんぺき**》だ";
