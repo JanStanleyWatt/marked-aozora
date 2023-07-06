@@ -36,6 +36,7 @@ function rubyPatternMatching(src: string): RegExpExecArray | null {
         /^(\p{sc=Hiragana}[ﾞﾟ゛゜・ーゝゞ\p{sc=Hiragana}]*?)《/u,
     ];
 
+    // Skip matching if the first character is a period, etc.
     if (/^[_*!?.,:;\-~\\…ﾞﾟ゛゜゠ー・ヽヾゝゞ、。]/u.test(src)) {
         return null;
     }
