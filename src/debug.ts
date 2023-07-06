@@ -20,10 +20,11 @@ import aozoraRuby from "./index.js";
 marked.use({
     mangle: false,
     headerIds: false,
-    extensions: [aozoraRuby({ useRpTag: true, useSutegana: true })],
+    extensions: [aozoraRuby()],
 });
 
-const markdown = "これは実に｜最強《さいきょう》で完璧《**かんぺき**》だ";
+const markdown =
+    "Thatかくちょうきのう《エクステンション》は、いちばん《ｲﾁﾊﾞﾝ》素晴らしいな";
 const env = process.env;
 
 if (env.MARKED_AOZORA_DEBUG_VERBOSE === "1") {
