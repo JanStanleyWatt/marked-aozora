@@ -77,6 +77,15 @@ test("hankaku", () => {
     );
 });
 
+test("hankaku_backslash", () => {
+    const html = marked.parseInline(
+        "ここはC:\\home《ホームディレクトリ》に案内だ"
+    );
+    expect(html).toBe(
+        "ここは<ruby>C:\\home<rt>ホームディレクトリ</rt></ruby>に案内だ"
+    );
+});
+
 test("katakana", () => {
     const html = marked.parseInline(
         "このエクステンション《かくちょうきのう》はｲﾁﾊﾞﾝ《いちばん》素晴らしいな"
