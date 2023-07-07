@@ -364,3 +364,35 @@ test("escape_both", () => {
         "このエクステンションは｜素晴らしい《さいこうの》出来栄えだ"
     );
 });
+
+test("error_bracket_start", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
+        "このエクステンションは｜素晴らしいさいこう》の出来栄えだ"
+    );
+
+    expect(html).toBe(
+        "このエクステンションは｜素晴らしいさいこう》の出来栄えだ"
+    );
+});
+
+test("error_bracket", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
+        "このエクステンションは｜素晴らしい《さいこうの出来栄えだ"
+    );
+
+    expect(html).toBe(
+        "このエクステンションは｜素晴らしい《さいこうの出来栄えだ"
+    );
+});
