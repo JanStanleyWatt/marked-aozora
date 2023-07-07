@@ -68,17 +68,12 @@ const aozoraRuby = (
 
         // !! This code using `any` type !!
         renderer(token: marked.Tokens.Generic): string {
-            /* eslint-disable @typescript-eslint/no-unsafe-argument */
+            const ruby = this.parser.parseInline(token.ruby);
+            const rt = this.parser.parseInline(token.rt);
+
             return option.useRpTag
-                ? `<ruby>${this.parser.parseInline(
-                      token.ruby
-                  )}<rp>（</rp><rt>${this.parser.parseInline(
-                      token.rt
-                  )}</rt><rp>）</rp></ruby>`
-                : `<ruby>${this.parser.parseInline(
-                      token.ruby
-                  )}<rt>${this.parser.parseInline(token.rt)}</rt></ruby>`;
-            /* eslint-enable @typescript-eslint/no-unsafe-argument */
+                ? `<ruby>${ruby}<rp>（</rp><rt>${rt}</rt><rp>）</rp></ruby>`
+                : `<ruby>${ruby}<rt>${rt}</rt></ruby>`;
         },
     };
 };
