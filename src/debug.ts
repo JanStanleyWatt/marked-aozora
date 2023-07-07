@@ -24,7 +24,7 @@ marked.use({
 });
 
 const markdown =
-    "Thatかくちょうきのう《エクステンション》は、いちばん《ｲﾁﾊﾞﾝ》素晴らしいな";
+    "このエクステンションは\\｜素晴らしい\\《さいこうの》出来栄えだ";
 const env = process.env;
 
 if (env.MARKED_AOZORA_DEBUG_VERBOSE === "1") {

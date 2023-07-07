@@ -50,11 +50,19 @@ const aozoraRuby = (
                 rubyObject.rt = rubySuteganaReplacer(rubyObject.rt);
             }
 
+            if (rubyObject.parent === "") {
+                return {
+                    type: "text",
+                    raw: rubyObject.raw,
+                    text: rubyObject.rt,
+                };
+            }
+
             return {
                 type: extensionName,
                 raw: rubyObject.raw,
-                ruby: this.lexer.inlineTokens(rubyObject.parent),
-                rt: this.lexer.inlineTokens(rubyObject.rt),
+                ruby: this.lexer.inlineTokens(rubyObject.parent.trim()),
+                rt: this.lexer.inlineTokens(rubyObject.rt.trim()),
             };
         },
 

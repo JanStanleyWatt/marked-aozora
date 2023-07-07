@@ -23,21 +23,21 @@ interface RubyToken {
 function rubyPatternMatching(src: string): RegExpExecArray | null {
     const rubyPattern = [
         // 区切り文字（｜）
-        /^｜([^｜]*?)《/u,
+        /^\\?｜([^｜]*?)\\?《/u,
         // 漢字
-        /^(\p{Ideographic}[ヵヶゕ\p{Ideographic}]*?)《/u,
+        /^(\p{Ideographic}[ヵヶゕ\p{Ideographic}]*?)\\?《/u,
         // 全角英数
-        /^([Ａ-Ｚａ-ｚ０-９\p{sc=Greek}\p{sc=Cyrillic}―＆’，．－]*?)《/u,
+        /^([Ａ-Ｚａ-ｚ０-９\p{sc=Greek}\p{sc=Cyrillic}―＆’，．－]*?)\\?《/u,
         // 半角英数
-        /^([A-Za-z0-9@$#=/\-&'"][A-Za-z0-9@$#=/\-&'"_*!?.,:;-~\\…]*?)《/u,
+        /^([A-Za-z0-9@$#=/\-&'"][A-Za-z0-9@$#=/\-&'"_*!?.,:;-~\\…]*?)\\?《/u,
         // カタカナ(イコールっぽく見える記号はダブルハイフンと言う別物)
-        /^(\p{sc=Katakana}[ﾞﾟ゛゜゠-ー・ヽヾ\p{sc=Katakana}]*?)《/u,
+        /^(\p{sc=Katakana}[ﾞﾟ゛゜゠-ー・ヽヾ\p{sc=Katakana}]*?)\\?《/u,
         // ひらがな
-        /^(\p{sc=Hiragana}[ﾞﾟ゛゜・ーゝゞ\p{sc=Hiragana}]*?)《/u,
+        /^(\p{sc=Hiragana}[ﾞﾟ゛゜・ーゝゞ\p{sc=Hiragana}]*?)\\?《/u,
     ];
 
     // Skip matching if the first character is a period, etc.
-    if (/^[_*!?.,:;\-~\\…ﾞﾟ゛゜゠ー・ヽヾゝゞ、。]/u.test(src)) {
+    if (/^[_*!?.,:;\-~…ﾞﾟ゛゜゠ー・ヽヾゝゞ、。]/u.test(src)) {
         return null;
     }
 
@@ -67,7 +67,7 @@ export function rubyDetector(src: string): number | undefined {
 /**
  * Function to use with `marked.TokenizerAndRendererExtension.tokenizer(src: string)`
  * @param src Markdown covered by this extension
- * @returns Object for <ruby> and <rt> tags, or `null`
+ * @returns Object for \<ruby> and \<rt> tags, or `null`
  */
 export function rubyTokenizer(src: string): RubyToken | null {
     const ruby = rubyPatternMatching(src);
@@ -81,6 +81,21 @@ export function rubyTokenizer(src: string): RubyToken | null {
     let openerCount = 1;
     let raw = ruby[0];
     let rt = "";
+
+    // Escape delimiter and bracket
+    if (raw.slice(0, 2) === "\\｜") {
+        return {
+            raw: "\\｜",
+            parent: "",
+            rt: "｜",
+        };
+    } else if (raw.match(/\\《/u) !== null) {
+        return {
+            raw: raw,
+            parent: "",
+            rt: raw.slice(0, -2) + "《",
+        };
+    }
 
     for (let index = 0; index < target.length; index++) {
         raw += target[index];

@@ -302,3 +302,65 @@ test("ruby_nest", () => {
         "このエクステンションは<ruby>超優秀<rt><ruby>ちょうゆうしゅう<rt>パーフェクト</rt></ruby></rt></ruby>である"
     );
 });
+
+test("escape_delimiter", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
+        "このエクステンションは\\｜素晴らしい《さいこうの》出来栄えだ"
+    );
+
+    expect(html).toBe(
+        "このエクステンションは｜素晴<ruby>らしい<rt>さいこうの</rt></ruby>出来栄えだ"
+    );
+});
+
+test("escape_rt", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
+        "このエクステンションは最高\\《さいこう》の出来栄えだ"
+    );
+
+    expect(html).toBe("このエクステンションは最高《さいこう》の出来栄えだ");
+});
+
+test("escape_rt_delimiter", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
+        "このエクステンションは｜素晴らしい\\《さいこうの》出来栄えだ"
+    );
+
+    expect(html).toBe(
+        "このエクステンションは｜素晴らしい《さいこうの》出来栄えだ"
+    );
+});
+
+test("escape_both", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
+        "このエクステンションは\\｜素晴らしい\\《さいこうの》出来栄えだ"
+    );
+
+    expect(html).toBe(
+        "このエクステンションは｜素晴らしい《さいこうの》出来栄えだ"
+    );
+});
