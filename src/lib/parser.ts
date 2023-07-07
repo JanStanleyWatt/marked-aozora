@@ -181,11 +181,10 @@ export function rubySuteganaReplacer(src: string): string {
         const from = fromArray[index];
         const to = toArray[index];
 
-        if (from === undefined || to === undefined) {
-            break;
+        // Only type assertion
+        if (from !== undefined && to !== undefined) {
+            answer = answer.replaceAll(from, to);
         }
-
-        answer = answer.replaceAll(from, to);
     }
     return answer;
 }
