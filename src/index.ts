@@ -68,8 +68,10 @@ const aozoraRuby = (
 
         // !! This code using `any` type !!
         renderer(token: marked.Tokens.Generic): string {
+            /* eslint-disable @typescript-eslint/no-unsafe-argument */
             const ruby = this.parser.parseInline(token.ruby);
             const rt = this.parser.parseInline(token.rt);
+            /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
             return option.useRpTag
                 ? `<ruby>${ruby}<rp>（</rp><rt>${rt}</rt><rp>）</rp></ruby>`

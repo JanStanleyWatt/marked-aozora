@@ -97,9 +97,9 @@ export function rubyTokenizer(src: string): RubyToken | null {
         };
     }
 
-    for (let index = 0; index < target.length; index++) {
-        raw += target[index];
-        switch (target[index]) {
+    for (const char of target) {
+        raw += char;
+        switch (char) {
             case "《":
                 ++openerCount;
                 break;
@@ -115,7 +115,7 @@ export function rubyTokenizer(src: string): RubyToken | null {
                 rt: rt,
             };
         } else {
-            rt += target[index];
+            rt += char;
         }
     }
 
@@ -178,8 +178,10 @@ export function rubySuteganaReplacer(src: string): string {
     ];
     let answer = src;
     for (let index = 0; index < fromArray.length; index++) {
+        /* eslint-disable security/detect-object-injection */
         const from = fromArray[index];
         const to = toArray[index];
+        /* eslint-enable security/detect-object-injection */
 
         // Only type assertion
         if (from !== undefined && to !== undefined) {
