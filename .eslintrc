@@ -13,6 +13,7 @@
         "sourceType": "module",
         "project": "./tsconfig.json"
     },
+    "ignorePatterns": ["test"],
     "env": { "browser": true, "node": true, "es2022": true },
     "rules": {
         "security/detect-unsafe-regex": "off"
