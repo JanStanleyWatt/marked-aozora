@@ -1,6 +1,6 @@
 {
     "name": "marked-aozora",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Add Aozora Bunko style ruby support to marked.js",
     "type": "module",
     "main": "./dist/index.js",
@@ -44,6 +44,7 @@
         "dist/lib",
         "package.json",
         "README.md",
+        "CHANGELOG.md",
         "LICENSE"
     ],
     "engines": {
