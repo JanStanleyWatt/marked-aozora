@@ -15,8 +15,16 @@
     "keywords": [
         "marked",
         "markdown",
-        "plugin"
+        "plugin",
+        "furigana"
     ],
+    "repository": {
+        "type": "github",
+        "url": "https://github.com/JanStanleyWatt/marked-aozora"
+    },
+    "bugs": {
+        "url": "https://github.com/JanStanleyWatt/marked-aozora/issues"
+    },
     "author": "Jan Stanley Watt",
     "license": "Apache-2.0",
     "peerDependencies": {
