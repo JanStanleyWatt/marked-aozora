@@ -373,6 +373,22 @@ test("error_bracket_start", () => {
     });
 
     const html = marked.parseInline(
+        "このエクステンションは｜素晴らしい《さいこうの出来栄えだ"
+    );
+
+    expect(html).toBe(
+        "このエクステンションは｜素晴らしい《さいこうの出来栄えだ"
+    );
+});
+
+test("error_bracket_end", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
         "このエクステンションは｜素晴らしいさいこう》の出来栄えだ"
     );
 
@@ -381,7 +397,7 @@ test("error_bracket_start", () => {
     );
 });
 
-test("error_bracket", () => {
+test("empty_bracket", () => {
     marked.use({
         mangle: false,
         headerIds: false,
@@ -389,10 +405,24 @@ test("error_bracket", () => {
     });
 
     const html = marked.parseInline(
-        "このエクステンションは｜素晴らしい《さいこうの出来栄えだ"
+        "このエクステンションは｜素晴らしい《》出来栄えだ"
     );
 
     expect(html).toBe(
-        "このエクステンションは｜素晴らしい《さいこうの出来栄えだ"
+        "このエクステンションは<ruby>素晴らしい<rt></rt></ruby>出来栄えだ"
     );
+});
+
+test("empty_parent", () => {
+    marked.use({
+        mangle: false,
+        headerIds: false,
+        extensions: [aozoraRuby({ useRpTag: false, useSutegana: false })],
+    });
+
+    const html = marked.parseInline(
+        "《エクステンション》は素晴らしい出来栄えだ"
+    );
+
+    expect(html).toBe("《エクステンション》は素晴らしい出来栄えだ");
 });
