@@ -108,11 +108,17 @@ export function rubyTokenizer(src: string): RubyToken | null {
                 break;
         }
 
-        if (openerCount === 0) {
+        if (openerCount === 0 && ruby[1] !== "") {
             return {
                 raw: raw,
                 parent: ruby[1],
                 rt: rt,
+            };
+        } else if (openerCount === 0) {
+            return {
+                raw: raw,
+                parent: "",
+                rt: "《" + rt + "》",
             };
         } else {
             rt += char;
