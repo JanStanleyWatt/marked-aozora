@@ -23,7 +23,7 @@ marked.use({
     extensions: [aozoraRuby()],
 });
 
-const markdown: string =
+const markdown =
     "このExtension《エクステンション》はとても｜**素敵**《すてき》で完璧《**かんぺき**》だ";
 
 console.log(marked.parse(markdown));
