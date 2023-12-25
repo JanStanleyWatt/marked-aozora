@@ -1,5 +1,13 @@
 # Change log
 
+## 1.1.0
+
+Fix:
+- Update `devDependencies` in package.json
+- Remove option `moduleResolution` in tsconfig.json
+
+## 1.0.0
+
 ## 0.1.1
 
 Feature:

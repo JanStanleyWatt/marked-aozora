@@ -18,8 +18,6 @@ import { marked } from "marked";
 import aozoraRuby from "./index.js";
 
 marked.use({
-    mangle: false,
-    headerIds: false,
     extensions: [aozoraRuby()],
 });
 
