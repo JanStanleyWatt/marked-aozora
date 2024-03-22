@@ -1,5 +1,12 @@
 # Change log
 
+## 1.2.0
+Fix:
+- Update `devDependencies` and `devDependencies` in package.json
+- Remove deprecated configure in test code
+- Remove deprecated package
+- Remove duplicated hyphen in `rubyPattern`
+
 ## 1.1.0
 
 Fix:
