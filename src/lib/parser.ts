@@ -29,7 +29,7 @@ function rubyPatternMatching(src: string): RegExpExecArray | null {
         // 全角英数
         /^([Ａ-Ｚａ-ｚ０-９\p{sc=Greek}\p{sc=Cyrillic}―＆’，．－]*?)\\?《/u,
         // 半角英数
-        /^([A-Za-z0-9@$#=/\-&'"][A-Za-z0-9@$#=/\-&'"_*!?.,:;-~\\…]*?)\\?《/u,
+        /^([A-Za-z0-9@$#=/\-&'"][A-Za-z0-9@$#=/\-&'"_*!?.,:;~\\…]*?)\\?《/u,
         // カタカナ(イコールっぽく見える記号はダブルハイフンと言う別物)
         /^(\p{sc=Katakana}[ﾞﾟ゛゜゠-ー・ヽヾ\p{sc=Katakana}]*?)\\?《/u,
         // ひらがな
@@ -60,7 +60,7 @@ function rubyPatternMatching(src: string): RegExpExecArray | null {
  */
 export function rubyDetector(src: string): number | undefined {
     return src.match(
-        /^[｜\p{Ideographic}Ａ-Ｚａ-ｚ０-９\p{sc=Greek}\p{sc=Cyrillic}＆’，．－A-Za-z0-9@$#=/\-&'".,、。\p{sc=Katakana}\p{sc=Hiragana}]/u
+        /^[｜\p{Ideographic}Ａ-Ｚａ-ｚ０-９\p{sc=Greek}\p{sc=Cyrillic}＆’，．－A-Za-z0-9@$#=/\-&'".,、。\p{sc=Katakana}\p{sc=Hiragana}]/u,
     )?.index;
 }
 
