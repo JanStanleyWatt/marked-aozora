@@ -20,7 +20,7 @@
     ],
     "repository": {
         "type": "github",
-        "url": "https://github.com/JanStanleyWatt/marked-aozora"
+        "url": "git+https://github.com/JanStanleyWatt/marked-aozora.git"
     },
     "bugs": {
         "url": "https://github.com/JanStanleyWatt/marked-aozora/issues"
