@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { marked } from "marked";
+import { TokenizerAndRendererExtension, Tokens } from "marked"
 import {
     rubyDetector,
     rubySuteganaReplacer,
@@ -29,7 +29,7 @@ interface extensionOption {
 
 const aozoraRuby = (
     option: extensionOption = { useRpTag: false, useSutegana: false }
-): marked.TokenizerAndRendererExtension => {
+): TokenizerAndRendererExtension => {
     return {
         name: extensionName,
 
@@ -39,7 +39,7 @@ const aozoraRuby = (
             return rubyDetector(src);
         },
 
-        tokenizer(src: string): marked.Tokens.Generic | void {
+        tokenizer(src: string): Tokens.Generic | undefined {
             const rubyObject = rubyTokenizer(src);
 
             if (rubyObject === null) {
@@ -67,7 +67,7 @@ const aozoraRuby = (
         },
 
         // !! This code using `any` type !!
-        renderer(token: marked.Tokens.Generic): string {
+        renderer(token: Tokens.Generic): string {
             /* eslint-disable @typescript-eslint/no-unsafe-argument */
             const ruby = this.parser.parseInline(token.ruby);
             const rt = this.parser.parseInline(token.rt);
